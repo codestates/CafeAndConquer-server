@@ -3,12 +3,16 @@ const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const db = require('./models');
+const passport = require("passport");
 
+const passportConfig = require("./passport");
+const db = require('./models');
+const userRouter = require('./routes/user');
 const port = process.env.PORT || 8080;
 
 const app = express();
 db.sequelize.sync();
+passportConfig();
 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -25,6 +29,10 @@ app.use(
     },
   }),
 );
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/api/user', userRouter);
 
 app.get('/', (req, res) => {
   res.send('hello, Cafe and Conquer!');
@@ -33,7 +41,7 @@ app.get('/', (req, res) => {
 app.use((req, res, next) => {
   res.status(404).json({
     code: 404,
-    errorMessage: 'Not Found.',
+    message: 'Not Found.',
   });
 });
 
@@ -41,7 +49,7 @@ app.use((err, req, res) => {
   console.error(err);
   res.status(500).json({
     code: 500,
-    errorMessage: 'Server Error',
+    message: 'Server Error',
   });
 });
 
