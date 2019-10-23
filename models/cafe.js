@@ -2,6 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   const Cafe = sequelize.define(
     'cafe',
     {
+      cafeId: {
+        type: DataTypes.STRING(10),
+        allowNull: false,
+        unique: true,
+      },
       cafeName: {
         type: DataTypes.STRING(100),
         allowNull: false,

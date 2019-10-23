@@ -7,6 +7,7 @@ const { Cafe } = require('../models');
 router.post('/', async (req, res, next) => {
   try {
     const {
+      cafeId,
       cafeName,
       address,
       latitude,
@@ -19,6 +20,7 @@ router.post('/', async (req, res, next) => {
 
     const point = { type: 'Point', coordinates: [latitude, longitude] };
     await Cafe.create({
+      cafeId,
       cafeName,
       address,
       point,
