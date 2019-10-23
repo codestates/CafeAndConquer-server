@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(20),
         allowNull: false,
       },
-      open24hour: {
+      open24Hour: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
