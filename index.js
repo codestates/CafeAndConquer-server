@@ -8,6 +8,7 @@ const passport = require("passport");
 const passportConfig = require("./passport");
 const db = require('./models');
 const userRouter = require('./routes/user');
+const cafeRouter = require('./routes/cafe');
 const port = process.env.PORT || 8080;
 
 const app = express();
@@ -33,6 +34,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/api/user', userRouter);
+app.use('/api/cafe', cafeRouter);
 
 app.get('/', (req, res) => {
   res.send('hello, Cafe and Conquer!');
