@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       address: {
         type: DataTypes.STRING(250),
-        allowNull: false,
+        allowNull: true,
       },
       point: {
         type: DataTypes.GEOMETRY('POINT'),
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       phone: {
         type: DataTypes.STRING(20),
-        allowNull: false,
+        allowNull: true,
       },
       open24Hour: {
         type: DataTypes.BOOLEAN,
