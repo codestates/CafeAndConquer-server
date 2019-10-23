@@ -10,14 +10,15 @@ const sequelize = new Sequelize(
   config,
 );
 
+db.User = require('./user')(sequelize, Sequelize);
+db.Cafe = require('./cafe')(sequelize, Sequelize);
+
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
 
-db.User = require('./user')(sequelize, Sequelize);
-db.Cafe = require('./cafe')(sequelize, Sequelize);
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
