@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "reset": "node seeders/resetTables.js"
+    "reset": "node utils/resetTables.js",
+    "data": "sequelize db:seed:all"
   },
   "repository": {
     "type": "git",

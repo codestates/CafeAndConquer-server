@@ -1,13 +1,13 @@
 const { sequelize, User, Cafe } = require('../models');
 
-const dropCafeTable = () => {
-  Cafe.drop().then(() => {
+const dropCafeTable = async () => {
+  await Cafe.drop().then(() => {
     console.log(`Cafe table delete.`);
   });
 };
 
-const dropUserTable = () => {
-  User.drop().then(() => {
+const dropUserTable = async () => {
+  await User.drop().then(() => {
     console.log(`User table delete.`);
   });
 };
