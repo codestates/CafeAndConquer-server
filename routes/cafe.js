@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { User, Cafe } = require('../models');
+const { User, Cafe, sequelize } = require('../models');
 
 // POST /api/cafe 카페 정보 추가 or 입력
 router.post('/', async (req, res, next) => {
@@ -117,11 +117,41 @@ router.get('/', async (req, res, next) => {
 });
 
 // POST /api/cafe/search 위치기반 카페 검색
-router.post('/search', (req, res, next) => {
-  res.status(200).json({
-    code: 200,
-    message: '카페 정보 검색',
-  });
+router.post('/search', async (req, res, next) => {
+  try {
+    const { latitude, longitude, maxDistance } = req.body;
+    const query = `
+      SELECT a.*
+      FROM (
+        SELECT
+          id, cafeId, cafeName, address, point,
+          phone, open24Hour, priceIceAmericano, enoughOutlets, createdAt,
+          updatedAt, deletedAt, pioneer, 
+          ST_DISTANCE_SPHERE(POINT(:longitude, :latitude), point) AS distance
+        FROM cafeandconquer.cafe
+      ) a
+      WHERE distance <= :maxDistance
+      ORDER BY distance
+      LIMIT 10`;
+    const result = await sequelize.query(query, {
+      replacements: {
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
+        maxDistance,
+      },
+      type: sequelize.QueryTypes.SELECT,
+    });
+    res.status(200).json({
+      code: 200,
+      message: '현재 위치 기반 카페 검색 완료',
+      data: result,
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ code: 500, message: '현재 위치 기반 카페 검색에 실패했습니다.' });
+  }
 });
 
 module.exports = router;
