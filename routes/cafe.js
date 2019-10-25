@@ -89,7 +89,7 @@ router.patch('/', async (req, res, next) => {
 router.delete('/', async (req, res, next) => {
   try {
     const { cafeId } = req.body;
-    await Cafe.delete({ where: { cafeId } });
+    await Cafe.destroy({ where: { cafeId } });
     res.status(200).json({ code: 200, message: '정보 삭제 성공!' });
   } catch (error) {
     console.error(error);
