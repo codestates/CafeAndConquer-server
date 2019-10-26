@@ -98,9 +98,9 @@ router.delete('/', async (req, res, next) => {
 });
 
 // GET /api/cafe 카페 정보 조회
-router.get('/', async (req, res, next) => {
+router.get('/:cafeId', async (req, res, next) => {
   try {
-    const { cafeId } = req.body;
+    const { cafeId } = req.params;
     const cafe = await Cafe.findOne({
       where: { cafeId },
       include: { model: User, attributes: ['email', 'nick'] },
