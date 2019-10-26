@@ -126,7 +126,7 @@ router.post('/search', async (req, res, next) => {
         SELECT
           id, cafeId, cafeName, address, point,
           phone, open24Hour, priceIceAmericano, enoughOutlets, createdAt,
-          updatedAt, deletedAt, pioneer, 
+          updatedAt, pioneer, 
           ST_DISTANCE_SPHERE(POINT(:longitude, :latitude), point) AS distance
         FROM cafeandconquer.cafe
       ) a
