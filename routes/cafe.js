@@ -117,7 +117,7 @@ router.get('/', async (req, res, next) => {
 });
 
 // POST /api/cafe/search 위치기반 카페 검색
-router.post('/search', async (req, res, next) => {
+router.get('/search', async (req, res, next) => {
   try {
     const { latitude, longitude, maxDistance } = req.body;
     const query = `
