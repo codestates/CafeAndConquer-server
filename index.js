@@ -3,9 +3,10 @@ const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const passport = require("passport");
+const cors = require('cors');
+const passport = require('passport');
 
-const passportConfig = require("./passport");
+const passportConfig = require('./passport');
 const db = require('./models');
 const userRouter = require('./routes/user');
 const cafeRouter = require('./routes/cafe');
@@ -28,6 +29,12 @@ app.use(
       httpOnly: true,
       secure: false,
     },
+  }),
+);
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
   }),
 );
 app.use(passport.initialize());
